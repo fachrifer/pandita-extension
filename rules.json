@@ -1,0 +1,19 @@
+[
+  {
+    "id": 1,
+    "priority": 1,
+    "action": {
+      "type": "modifyHeaders",
+      "responseHeaders": [
+        {
+          "header": "Set-Cookie",
+          "operation": "remove"
+        }
+      ]
+    },
+    "condition": {
+      "urlFilter": "||ai.kemenkeu.go.id/api/chat/completions",
+      "resourceTypes": ["xmlhttprequest"]
+    }
+  }
+]

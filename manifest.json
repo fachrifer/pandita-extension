@@ -1,0 +1,91 @@
+{
+  "manifest_version": 3,
+  "name": "Pandita",
+  "version": "1.0.0",
+  "description": "Bagian dari Ekosistem Kemenkeu AI Platform",
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "webNavigation",
+    "contextMenus",
+    "storage",
+    "sidePanel",
+    "clipboardRead",
+    "clipboardWrite",
+    "scripting",
+    "cookies"
+  ],
+  "host_permissions": [
+    "https://ai.kemenkeu.go.id/*",
+    "https://docs.google.com/*",
+    "https://docs.google.com/spreadsheets/*",
+    "https://docs.google.com/presentation/*",
+    "https://mail.google.com/*",
+    "https://outlook.office.com/*",
+    "https://outlook.office365.com/*",
+    "https://outlook.live.com/*",
+    "https://outlook.cloud.microsoft/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "action": {
+    "default_title": "Pandita",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["config.js", "content.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://docs.google.com/*"],
+      "exclude_matches": [
+        "https://docs.google.com/spreadsheets/*",
+        "https://docs.google.com/presentation/*"
+      ],
+      "js": ["config.js", "content-gdocs.js"],
+      "all_frames": true,
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://docs.google.com/spreadsheets/*"],
+      "js": ["config.js", "content-gsheets.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://docs.google.com/presentation/*"],
+      "js": ["config.js", "content-gslides.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://mail.google.com/*",
+        "https://outlook.office.com/*",
+        "https://outlook.office365.com/*",
+        "https://outlook.live.com/*",
+        "https://outlook.cloud.microsoft/*"
+      ],
+      "js": ["config.js", "content-email.js"],
+      "all_frames": true,
+      "run_at": "document_idle"
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pandita Settings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <!-- HEADER -->
+    <header class="page-header">
+      <div class="header-branding">
+        <div class="header-icon">
+          <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+        </div>
+        <div>
+          <h1>Settings</h1>
+          <p class="header-subtitle">Pandita — Kemenkeu AI Platform</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- ACCOUNT SECTION -->
+    <section class="card" id="account-section">
+      <div class="section-label">Account Details</div>
+
+      <!-- Logged In State -->
+      <div id="auth-logged-in" class="hidden">
+        <div class="account-card">
+          <div class="account-avatar">
+            <span class="material-symbols-outlined">person</span>
+          </div>
+          <div class="account-info">
+            <h3 id="auth-user-name">User</h3>
+            <p id="auth-user-email" class="account-meta"></p>
+          </div>
+          <button id="btn-sign-out" class="icon-btn icon-btn-danger" title="Sign out">
+            <span class="material-symbols-outlined">logout</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Logged Out State -->
+      <div id="auth-logged-out">
+        <p class="field-description">Sign in to access AI models and features.</p>
+        <button id="btn-sso-login" class="btn-sso">
+          <span class="material-symbols-outlined">vpn_key</span>
+          <span>Sign in with SSO</span>
+        </button>
+        <div id="auth-status" class="status-text"></div>
+      </div>
+    </section>
+
+    <!-- CONNECTION SECTION -->
+    <section class="card">
+      <div class="section-label">Connection</div>
+      <div class="connection-field">
+        <label class="field-label">Instance URL</label>
+        <div class="url-display">
+          <span class="material-symbols-outlined url-icon">link</span>
+          <span id="base-url" class="url-text"></span>
+          <span id="connection-badge" class="connection-indicator">
+            <span class="material-symbols-outlined">pending</span>
+          </span>
+        </div>
+      </div>
+      <button id="btn-test-connection" class="btn-secondary">
+        <span class="material-symbols-outlined">network_check</span>
+        Test Connection
+      </button>
+    </section>
+
+    <!-- MODEL MANAGEMENT SECTION -->
+    <section class="card">
+      <div class="section-label-row">
+        <span class="section-label">Model Management</span>
+        <span id="model-count-badge" class="count-badge"></span>
+      </div>
+      <div class="field">
+        <label class="field-label" for="default-model">Default Model</label>
+        <div class="select-wrapper">
+          <span class="material-symbols-outlined select-icon">auto_awesome</span>
+          <select id="default-model" class="select-input">
+            <option value="">Sign in to load models</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- PREFERENCES SECTION -->
+    <section class="card">
+      <div class="section-label">Preferences</div>
+      <div class="toggle-field">
+        <div class="toggle-info">
+          <div class="toggle-icon-wrap">
+            <span class="material-symbols-outlined">edit_note</span>
+          </div>
+          <div>
+            <p class="toggle-title">In-place Editing</p>
+            <p class="toggle-description">
+              Replace text directly on the page for Rewrite, Fix Grammar, Expand, and Shorten actions.
+            </p>
+          </div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="in-place-enabled" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </section>
+
+    <!-- SAVE BUTTON -->
+    <div class="actions">
+      <button id="btn-save" class="btn-primary">
+        <span class="material-symbols-outlined">save</span>
+        Save Settings
+      </button>
+      <span id="save-status" class="status-text"></span>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="page-footer">
+      <p>Pandita v1.0.0</p>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="auth.js"></script>
+  <script src="api.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pandita</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="lib/highlight-github-dark.min.css">
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+  <!-- LOGIN OVERLAY (SSO only) -->
+  <div id="login-overlay">
+    <div class="login-content">
+      <!-- Header -->
+      <header class="login-header">
+        <div class="login-header-left">
+          <div class="brand-icon">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+          </div>
+          <span class="brand-name">Pandita</span>
+        </div>
+        <div class="login-header-right">
+      <!--<button class="icon-btn" title="Help">
+            <span class="material-symbols-outlined">help_outline</span>
+          </button>-->
+        </div>
+      </header>
+
+      <!-- Login Body -->
+      <div class="login-body">
+        <div class="login-status-badge">
+          <span class="status-dot"></span>
+          <span class="status-label">Ready to Connect</span>
+        </div>
+        <div class="login-logo">
+          <img src="icons/logo_kemenkeu.png" alt="Kemenkeu logo" class="login-logo-img">
+        </div>
+        <h1 class="login-title">Selamat Datang di Pandita</h1>
+        <p class="login-description">Bagian dari Ekosistem Kemenkeu AI Platform.</p>
+
+        <div class="login-action">
+          <button id="btn-sso-login" class="btn-sso">
+            <span class="material-symbols-outlined">vpn_key</span>
+            <span>Log in with SSO</span>
+          </button>
+          <div class="login-divider">
+            <div class="divider-line"></div>
+            <span class="divider-label">Secure</span>
+            <div class="divider-line"></div>
+          </div>
+        </div>
+
+        <div id="login-status" class="login-status"></div>
+
+        <!-- Footer -->
+        <div class="login-footer">
+          <p class="login-version">Pandita v1.0.0</p>
+          <div class="login-links">
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="#">Support</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTAINER -->
+  <div id="main-container" class="hidden">
+    <!-- HEADER -->
+    <header id="header">
+      <div class="header-left">
+        <span class="header-title">Pandita</span>
+      </div>
+      <div class="header-right">
+        <button id="btn-refresh-models" class="icon-btn has-tooltip" title="Muat ulang daftar model">
+          <span class="material-symbols-outlined">refresh</span>
+          <span class="btn-tooltip">Muat Ulang Model</span>
+        </button>
+        <button id="btn-settings" class="icon-btn has-tooltip" title="Buka pengaturan">
+          <span class="material-symbols-outlined">settings</span>
+          <span class="btn-tooltip">Pengaturan</span>
+        </button>
+        <button id="btn-logout" class="icon-btn has-tooltip" title="Keluar dari akun">
+          <span class="material-symbols-outlined">logout</span>
+          <span class="btn-tooltip">Keluar</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Model & Tools Bar -->
+    <div id="model-bar">
+      <div class="model-selector-wrap">
+        <span class="model-dot"></span>
+        <select id="model-select" class="model-select">
+          <option value="">Loading models...</option>
+        </select>
+      </div>
+      <span id="user-display-name" class="user-chip"></span>
+    </div>
+
+    <!-- CHAT SELECTOR STRIP -->
+    <div id="chat-selector" class="chat-selector hidden">
+      <button id="btn-new-chat" class="chat-tab chat-tab-new" title="Percakapan baru">
+        <span class="material-symbols-outlined">add</span>
+        <span>Baru</span>
+      </button>
+      <div id="chat-tabs" class="chat-tabs"></div>
+    </div>
+
+    <!-- OUTPUT AREA -->
+    <div id="output-area" class="hidden">
+      <div class="output-header">
+        <div class="output-title-group">
+          <span class="material-symbols-outlined output-icon">auto_awesome</span>
+          <span class="output-title">Result</span>
+        </div>
+        <button id="btn-close-output" class="btn-close-output" title="Close and return to chat">
+          <span class="material-symbols-outlined">close</span>
+          <span>Close</span>
+        </button>
+      </div>
+      <div id="output-content" class="markdown-body"></div>
+      <div id="output-actions" class="action-bar">
+        <button id="btn-copy" class="btn-action" title="Copy as text">
+          <span class="material-symbols-outlined">content_copy</span>
+          Copy
+        </button>
+        <button id="btn-copy-formatted" class="btn-action" title="Copy as formatted HTML">
+          <span class="material-symbols-outlined">content_paste</span>
+          Copy Formatted
+        </button>
+        <button id="btn-listen" class="btn-action" title="Read aloud">
+          <span class="material-symbols-outlined">volume_up</span>
+          Listen
+        </button>
+      </div>
+    </div>
+
+    <!-- CHAT AREA -->
+    <div id="chat-area">
+      <div id="chat-messages" class="chat-messages"></div>
+
+      <!-- Input Area -->
+      <div id="chat-input-area" class="chat-input-area">
+        <div class="input-container">
+          <textarea id="chat-input" placeholder="Message..." rows="1"></textarea>
+          <button id="btn-send" class="btn-send" title="Send message">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">send</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Prompt Coach Area -->
+    <div id="prompt-coach-area" class="hidden">
+      <div class="coach-header">
+        <div class="coach-title-group">
+          <span class="material-symbols-outlined coach-icon">psychology</span>
+          <span class="coach-title">Prompt Coach</span>
+        </div>
+        <button id="btn-close-coach" class="btn-close-output" title="Tutup dan kembali ke chat">
+          <span class="material-symbols-outlined">close</span>
+          <span>Tutup</span>
+        </button>
+      </div>
+      <div class="coach-input-section">
+        <textarea id="coach-prompt-input" class="coach-textarea" placeholder="Tempel prompt Anda di sini untuk diperbaiki..." rows="4"></textarea>
+        <div class="coach-options">
+          <input id="coach-goal" class="coach-option-input" type="text" placeholder="Tujuan (opsional)">
+          <input id="coach-audience" class="coach-option-input" type="text" placeholder="Target audiens (opsional)">
+        </div>
+        <button id="btn-coach-run" class="btn-coach-run">
+          <span class="material-symbols-outlined">psychology</span>
+          <span>Perbaiki Prompt Saya</span>
+        </button>
+      </div>
+      <div id="coach-result" class="coach-result markdown-body"></div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav id="bottom-nav" class="bottom-nav">
+      <button class="nav-item active" data-view="chat" title="Chat">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat</span>
+        <span class="nav-label">Chat</span>
+      </button>
+      <button class="nav-item" data-view="summarize" title="Summarize">
+        <span class="material-symbols-outlined">article</span>
+        <span class="nav-label">Summarize</span>
+      </button>
+      <button class="nav-item" data-view="explain" title="Jelaskan Halaman">
+        <span class="material-symbols-outlined">auto_awesome</span>
+        <span class="nav-label">Explain</span>
+      </button>
+      <button class="nav-item" data-view="prompt-coach" title="Prompt Coach">
+        <span class="material-symbols-outlined">psychology</span>
+        <span class="nav-label">Coach</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- SYNC TOAST -->
+  <div id="sync-toast" class="sync-toast"></div>
+
+  <script src="config.js"></script>
+  <script src="lib/marked.min.js"></script>
+  <script src="lib/highlight.min.js"></script>
+  <script src="auth.js"></script>
+  <script src="api.js"></script>
+  <script src="sidepanel.js"></script>
+</body>
+</html>

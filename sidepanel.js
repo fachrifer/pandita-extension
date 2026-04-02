@@ -999,6 +999,16 @@ Jika ditemukan masalah kepatuhan, tandai dan perbaiki secara otomatis di PROMPT 
     });
   }
 
+  function setActiveNavForAction(action) {
+    if (action === "summarize") {
+      setActiveNav("summarize");
+      return;
+    }
+    if (action === "explain-page") {
+      setActiveNav("explain");
+    }
+  }
+
   // ─── SEND MESSAGE ──────────────────────────────────────────────────────────
 
   function sendMessage() {
@@ -1063,6 +1073,7 @@ Jika ditemukan masalah kepatuhan, tandai dan perbaiki secara otomatis di PROMPT 
 
     switch (message.type) {
       case "show-result":
+        setActiveNavForAction(message.action);
         showOutput(message.text);
         break;
 
@@ -1072,9 +1083,7 @@ Jika ditemukan masalah kepatuhan, tandai dan perbaiki secara otomatis di PROMPT 
         const actionPrompt = ACTION_PROMPTS[action];
         if (!actionPrompt) break;
 
-        if (action === "explain-page") {
-          setActiveNav("explain");
-        }
+        setActiveNavForAction(action);
 
         showOutputLoading();
 
@@ -1108,6 +1117,7 @@ Jika ditemukan masalah kepatuhan, tandai dan perbaiki secara otomatis di PROMPT 
       case "init-chat": {
         outputArea.classList.add("hidden");
         chatArea.classList.remove("hidden");
+        setActiveNav("chat");
 
         currentSelection = message.selectedText || "";
 
